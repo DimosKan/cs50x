@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Register
+{% endblock %}
+{% block main %}
+
+<head>
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+    <script>
+      //Made an extra script to validate if repeated password is correct or if anything is missing, didn't see that it was required to do it on back end, so I kept both front-end and back-end measures.
+        function validateForm() {
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+            var repeatPassword = document.getElementById("repeatPassword").value;
+            var errorElement = document.getElementById("error");
+
+            if (!username || !password || !repeatPassword) {
+                errorElement.innerHTML = "All fields are required.";
+                return false;
+            }
+
+            if (password !== repeatPassword) {
+                errorElement.innerHTML = "Passwords do not match.";
+                return false;
+            }
+
+            errorElement.innerHTML = "";
+            return true;
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <h2 class="mt-5 mb-3">Registration Form</h2>
+        <form method="post" action="/register" onsubmit="return validateForm()">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input id="username" name="username" type="text" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="repeatPassword">Repeat Password:</label>
+                <input class="form-control" id="repeatPassword" name="confirmation" type="password" required>
+            </div>
+            <div class="error" id="error"></div>
+            <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+    </div>
+</body>
+{% endblock %}

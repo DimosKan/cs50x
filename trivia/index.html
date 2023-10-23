@@ -1,0 +1,177 @@
+<!-- I took the liberty in order to make the quiz a little less mundane and more Dynamic to add a little randomness to what question shall appear where. User can add as many questions
+he wants and it will get displayed randomly in every reload.-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+    <title>Trivia!</title>
+    <script>
+        //A table of questions and answer for the multi-choice question.
+        var Questionsjson = [
+            {
+                "Question": "Which planet is closest to the sun?",
+                "a1": "Jupiter",
+                "a2": "Uranus",
+                "a3": "Mars",
+                "a4": "Mercury",
+                "correctanswer": "Mercury"
+            },
+            {
+                "Question": "What is the capital of France?",
+                "a1": "London",
+                "a2": "Paris",
+                "a3": "Rome",
+                "a4": "Berlin",
+                "correctanswer": "Paris"
+            },
+            {
+                "Question": "Who painted the Mona Lisa?",
+                "a1": "Pablo Picasso",
+                "a2": "Leonardo da Vinci",
+                "a3": "Vincent van Gogh",
+                "a4": "Michelangelo",
+                "correctanswer": "Leonardo da Vinci"
+            }
+        ];
+
+        //A table of questions and answer for the free response.
+        var freeQjson = [
+            {
+                "Question": "1 + 1 = ?",
+                "correctanswer": "2"
+            },
+            {
+                "Question": "Which Singer is famous for his album named 'Bat out of hell' ",
+                "correctanswer": "Meat Loaf"
+            }
+        ];
+
+        var currentQuestionIndex = -1;
+        var currentFreeQuestionIndex = -1;
+
+
+        // Chooses one question fromt the JSON I provided earlier.
+        function displayRandomQuestion() {
+            currentQuestionIndex = Math.floor(Math.random() * Questionsjson.length);
+            var question = Questionsjson[currentQuestionIndex];
+            var questionElement = document.getElementById("question");
+            var answers = [question.a1, question.a2, question.a3, question.a4];
+            var answerButtons = document.getElementsByClassName("answer-button");
+
+            questionElement.textContent = question.Question;
+
+            for (var i = 0; i < answerButtons.length; i++) {
+                var answerButton = answerButtons[i];
+                answerButton.textContent = answers[i];
+                answerButton.removeAttribute("disabled");
+                answerButton.classList.remove("correct-answer", "wrong-answer");
+                answerButton.setAttribute("onclick", "checkAnswer(this)");
+            }
+
+            var answerStatusElement = document.getElementById("answer-status");
+            answerStatusElement.textContent = "";
+        }
+
+        //Randomly displays one of the questions for the second json for the free question
+        function displayRandomFreeQuestion() {
+            currentFreeQuestionIndex = Math.floor(Math.random() * freeQjson.length);
+            var question = freeQjson[currentFreeQuestionIndex];
+            var questionElement = document.getElementById("free-question");
+            questionElement.textContent = question.Question;
+
+            var answerStatusElement = document.getElementById("free-answer-status");
+            answerStatusElement.textContent = "";
+            document.getElementById("fname").value = "";
+            document.getElementById("fname").classList.remove("correct-answer", "wrong-answer");
+            document.getElementById("fname").removeAttribute("disabled");
+        }
+
+        //Checks the answer to the multiple questions.
+        function checkAnswer(selectedButton) {
+            var question = Questionsjson[currentQuestionIndex];
+            var correctAnswer = question.correctanswer;
+            var answerButtons = document.getElementsByClassName("answer-button");
+
+            for (var i = 0; i < answerButtons.length; i++) {
+                var answerButton = answerButtons[i];
+                answerButton.setAttribute("disabled", "true");
+
+                if (answerButton === selectedButton) {
+                    if (answerButton.textContent === correctAnswer) {
+                        answerButton.classList.add("correct-answer");
+                        var answerStatusElement = document.getElementById("answer-status");
+                        answerStatusElement.textContent = "Correct!";
+                        answerStatusElement.style.color = "green";
+                    } else {
+                        answerButton.classList.add("wrong-answer");
+                        var answerStatusElement = document.getElementById("answer-status");
+                        answerStatusElement.textContent = "Wrong! The correct answer is: " + correctAnswer;
+                        answerStatusElement.style.color = "red";
+                    }
+                } else if (answerButton.textContent === correctAnswer) {
+                    answerButton.classList.add("correct-answer");
+                }
+            }
+        }
+
+        //checks if the free response the user provided is correct.
+        function checkFreeResponse() {
+            var question = freeQjson[currentFreeQuestionIndex];
+            var correctAnswer = question.correctanswer;
+            var userInput = document.getElementById("fname").value;
+            var inputElement = document.getElementById("fname");
+            inputElement.setAttribute("disabled", "true");
+
+            if (userInput === correctAnswer) {
+                inputElement.classList.add("correct-answer");
+                var answerStatusElement = document.getElementById("free-answer-status");
+                answerStatusElement.textContent = "Correct!";
+                answerStatusElement.style.color = "green";
+            } else {
+                inputElement.classList.add("wrong-answer");
+                var answerStatusElement = document.getElementById("free-answer-status");
+                answerStatusElement.textContent = "Wrong! The correct answer is: " + correctAnswer;
+                answerStatusElement.style.color = "red";
+            }
+        }
+
+        window.onload = function () {
+            displayRandomQuestion();
+            displayRandomFreeQuestion();
+        };
+    </script>
+</head>
+<body>
+<div class="header">
+    <h1>Trivia!</h1>
+</div>
+
+<div class="container">
+    <div class="section">
+        <h2>Part 1: Multiple Choice</h2>
+        <hr>
+        <h3 id="question"></h3>
+        <p id="answer-status"></p>
+        <div id="answer-buttons">
+            <button class="answer-button"></button>
+            <button class="answer-button"></button>
+            <button class="answer-button"></button>
+            <button class="answer-button"></button>
+        </div>
+    </div>
+    <div class="section">
+        <h2>Part 2: Free Response</h2>
+        <hr>
+        <form onsubmit="event.preventDefault(); checkFreeResponse();">
+            <h3><label for="fname" id="free-question"></label></h3>
+            <p id="free-answer-status"></p>
+            <input type="text" id="fname" name="fname"><br><br>
+            <input type="submit" value="Check Answer">
+        </form>
+
+    </div>
+</div>
+</body>
+</html>

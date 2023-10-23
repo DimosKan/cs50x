@@ -1,0 +1,20 @@
+*By Running two simple queries:
+
+SELECT artist_id, count(artist_id) as frequency
+FROM songs
+Group BY artist_id
+ORDER BY TotalRepetitions DESC
+
+and
+
+SELECT AVG(danceability) , AVG(energy) ,AVG(loudness), AVG(valence), AVG(tempo), AVG(speechiness), AVG(duration_ms)/60000
+FROM songs
+
+We can see That this person's favourite artist is XXXTENTACION and Post Malone first one is known artist for Rap and the latter for hip hop, pop, R&B, and trap
+Now with an average tempo of 120 BPM we can assume that this person likes fast music with not a lot of speechiness.
+
+
+* The aura can be mistaken easily, first of all it is quite common for two or more poeple to share the same account, to be honest I am not really into spotify, I am more of a youtube person
+so I don't know if spotify has any mechanism which allows only one pc to be logged in at a time but that would be one solution.
+
+

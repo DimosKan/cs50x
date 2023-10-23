@@ -1,0 +1,92 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Add Money
+{% endblock %}
+
+{% block main %}
+<div class="container">
+    <h2 class="mt-3 text-center">Credit Card Information</h2>
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <form action="/moremoney" method="post" onsubmit="return validateForm()" class="mt-3">
+                <div class="form-group">
+                    <label for="cardNumber">Card Number:</label>
+                    <input type="text" class="form-control" id="cardNumber" name="cardNumber" maxlength="16" placeholder="Enter your card number" required>
+                </div>
+                <div class="form-group">
+                    <label for="cardName">Cardholder Name:</label>
+                    <input type="text" class="form-control" id="cardName" name="cardName" placeholder="Enter the cardholder name" required>
+                </div>
+                <div class="form-group">
+                    <label for="expirationDate">Expiration Date:</label>
+                    <input type="text" class="form-control" id="expirationDate" name="expirationDate" maxlength="7" placeholder="MM/YYYY" required>
+                </div>
+                <div class="form-group">
+                    <label for="cvv">CVV:</label>
+                    <input type="text" class="form-control" id="cvv" name="cvv" maxlength="4" placeholder="Enter CVV" required>
+                </div>
+                <div class="form-group">
+                    <label for="cash">Cash to insert to your account:</label>
+                    <input class="form-control" id="cash" type="text" name="cash" placeholder="$" required>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    function validateForm() {
+        var cardNumberInput = document.getElementById("cardNumber");
+        var cardNumber = cardNumberInput.value.replace(/\s/g, ""); // Remove whitespace
+
+        // Regular expression to check if the card number consists of 16 digits
+        var cardNumberRegex = /^[0-9]{16}$/;
+
+        if (!cardNumberRegex.test(cardNumber)) {
+            alert("Invalid card number. Please enter a 16-digit card number.");
+            cardNumberInput.focus();
+            return false;
+        }
+
+        // Problem set 1 translated to javascript and applied to the form
+        var extra_dig = 0;
+        var sum_dig = 0;
+        var count = cardNumber.length;
+
+        for (var i = count - 1; i >= 0; i--) {
+            var dig = parseInt(cardNumber.charAt(i));
+
+            if (i % 2 === count % 2) {
+                var temp_dig = dig * 2;
+                sum_dig += temp_dig > 9 ? temp_dig - 9 : temp_dig;
+            } else {
+                extra_dig += dig;
+            }
+        }
+
+        var valid_ch = extra_dig + sum_dig;
+
+        if (valid_ch % 10 !== 0) {
+            alert("Invalid card number. Please enter a valid card number.");
+            cardNumberInput.focus();
+            return false;
+        }
+
+        // Checking the card type (for no apparent reason, just keeping the algorithm intact)
+        var cardType = "Unknown";
+
+        if (cardNumber.startsWith("34") || cardNumber.startsWith("37")) {
+            cardType = "AMEX";
+        } else if (cardNumber.startsWith("51") || cardNumber.startsWith("52") || cardNumber.startsWith("53") || cardNumber.startsWith("54") || cardNumber.startsWith("55")) {
+            cardType = "MASTERCARD";
+        } else if (cardNumber.startsWith("4")) {
+            cardType = "VISA";
+        }
+        return true;
+    }
+</script>
+</body>
+{% endblock %}

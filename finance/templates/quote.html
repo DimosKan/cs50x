@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Quote
+{% endblock %}
+
+{% block main %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <form class="mt-3" action="/quote" method="post">
+                    <div class="form-group">
+                        <label for="symbol">Symbol:</label>
+                        <input id="symbol" name="symbol" type="text" class="form-control" required>
+                    </div>
+                    <div class="text-center">
+                        <button class="btn btn-primary" type="submit">Search</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

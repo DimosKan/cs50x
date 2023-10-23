@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Quotetable
+{% endblock %}
+
+{% block main %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h3>Name: {{ name }}</h3>
+            <h3>Price: {{ price | usd }}</h3>
+            <h3>Symbol: {{ symbol }}</h3>
+        </div>
+    </div>
+</div>
+{% endblock %}

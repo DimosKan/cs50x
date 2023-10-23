@@ -1,0 +1,20 @@
+Times:
+
+10 simulations:  0m0.034s
+100 simulations: 0m0.034s
+1000 simulations: 0m0.040s
+10000 simulations: 0m0.112s
+100000 simulations: 0m0.728s
+1000000 simulations: 0m7.609s
+
+Questions:
+
+Which predictions, if any, proved incorrect as you increased the number of simulations?:
+
+After a certain amount of simulations the results got a far more stable and consistent but by googling the results of the world cup of 2018 of men it seems I am still away from a real algorithm that can fully predict the results.
+
+
+Suppose you're charged a fee for each second of compute time your program uses.
+After how many simulations would you call the predictions "good enough"?:
+
+For the sake of accuracy I would choose 1000 simulations which seems to produce the most stable results for a very small cost in ms, after that, there is a large increase in the run time as it exponentially bigger.

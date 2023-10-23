@@ -1,0 +1,13 @@
+sort1 uses: Bubble Sort
+
+How do you know?: It has the worst run time on a the file with random numbers, although it is the quickest on already sorted numbers.
+
+
+sort2 uses: Merge Sort
+
+How do you know?: It is by far the quickest sorting algorithm for random and reversed numbers.
+
+
+sort3 uses: Selection Sort
+
+How do you know?: It performs the slowest on sorted numbers.
